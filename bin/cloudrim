@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# -*- mode: ruby -*-
+$LOAD_PATH.push('lib') if File.path(__FILE__).match(/\./)
+
+require 'cloudrim'
+require 'cloudrim/cli'
+
+require 'rest-client'
+
+Cloudrim::CLI.start
