@@ -142,8 +142,8 @@ end
 get '/api/1.0/user' do
   ## Find a random user ready for play.
   num_users = DBR['users'].count
-  user = DBR['users'].find({ready_to_play: true}).skip(rand(num_users)).first
-  {user: user}.to_json
+  user = DBR['users'].find({ready_to_play: true}).skip(rand(1000)).first
+  {user: user, num_users: num_users}.to_json
 end
 
 get '/api/1.0/battle' do

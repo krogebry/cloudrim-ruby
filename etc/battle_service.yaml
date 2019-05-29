@@ -5,9 +5,10 @@ provides: "cloudrim-battle"
   # url: /healthz
   # code: 200
 # port: 4567
-cpu: 300
-num: 0
-mem: 200
+cpu: 512
+num: 1
+mem: 256
+# 2048 3943
 # public: true
 # force_insecure_redirect: true
 # cert_arn: arn:aws:acm:us-east-1:903369196314:certificate/d290885d-4550-4579-aa00-967783154c0e

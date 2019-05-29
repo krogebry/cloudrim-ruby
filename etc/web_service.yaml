@@ -5,9 +5,9 @@ health_check:
   url: /healthz
   code: 200
 port: 4567
-cpu: 1048
+cpu: 512
 num: 1
-mem: 1000
+mem: 512
 public: true
 # force_insecure_redirect: true
 cert_arn: arn:aws:acm:us-east-1:903369196314:certificate/d290885d-4550-4579-aa00-967783154c0e

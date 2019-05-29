@@ -12,6 +12,7 @@ module Cloudrim
         begin
           r = RestClient.get("#{api}/user")
           user = JSON::parse(r.body)['user']
+          next if user == nil
           pp user
 
           data = {user_id: user['_id']['$oid']}
