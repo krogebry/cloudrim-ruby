@@ -1,0 +1,30 @@
+---
+name: "cloudrim-battle"
+provides: "cloudrim-battle"
+# health_check:
+  # url: /healthz
+  # code: 200
+# port: 4567
+cpu: 300
+num: 0
+mem: 200
+# public: true
+# force_insecure_redirect: true
+# cert_arn: arn:aws:acm:us-east-1:903369196314:certificate/d290885d-4550-4579-aa00-967783154c0e
+# dns:
+  # name: cloudrim.krogebry.com
+  # hosted_zone_name: krogebry.com.
+environment:
+  ENV_NAME: dev
+  API_URL: https://cloudrim.krogebry.com
+  # WS_HOSTNAME: cloudrim.krogebry.com
+  # WS_PORT: 443
+  # WS_SSL: true
+network:
+  vpc:
+    Name: development
+  subnet: Application
+image:
+  name: cloudrim-battle
+  label: latest
+

@@ -21,6 +21,33 @@ get '/api/1.0/flush_cache' do
   {success: true}.to_json
 end
 
+get '/api/1.0/unlock' do
+  s = {locked_until: { '$lte': Time.new }, ready_to_play: false}
+  users = DBM['users'].find(s)
+  users.each do |u|
+    user = Cloudrim::User.new(u)
+    LOG.debug("Updating user: #{user.data['name']}")
+    user.update({ready_to_play: true, locked_until: 0})
+    LOG.debug("Done updating: #{user.data['name']}")
+  end
+  {}.to_json
+end
+
+get '/api/1.0/stats' do
+  users = DBR['users'].find().sort({num_games: -1}).limit(10)
+  data = []
+  users.each do |user|
+    data.push({
+                  user: user['name'],
+                  wins: user['wins'],
+                  losses: user['losses'],
+                  num_games: user['num_games']})
+    # LOG.debug("#{user['name']} - #{user['num_games']}")
+  end
+
+  {data: data}.to_json
+end
+
 post '/api/1.0/battle' do
   user_id = params['user_id']
   user = Cloudrim::User.find_by_id(user_id)
@@ -30,6 +57,14 @@ post '/api/1.0/battle' do
 
   data = {user_id: user.data['_id'].to_s}
   data[:winner] = user_win_roll > opponent_win_roll ? 'user' : 'opponent'
+
+  if data[:winner] == 'user'
+    user.data[:wins] ||= 0
+    user.data[:wins] += 1
+  else
+    user.data[:losses] ||= 0
+    user.data[:losses] += 1
+  end
 
   locked_until = Time.at(Time.new.to_i + 300)
 
@@ -106,7 +141,8 @@ end
 
 get '/api/1.0/user' do
   ## Find a random user ready for play.
-  user = DBR['users'].find({ready_to_play: true}).skip(rand(10)).first
+  num_users = DBR['users'].count
+  user = DBR['users'].find({ready_to_play: true}).skip(rand(num_users)).first
   {user: user}.to_json
 end
 

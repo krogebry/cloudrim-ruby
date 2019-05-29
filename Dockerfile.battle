@@ -1,0 +1,5 @@
+FROM cloudrim-web:0.1.0
+
+WORKDIR /opt/edos/cloudrim/ui/
+
+CMD ["./bin/ep_battle.sh"]

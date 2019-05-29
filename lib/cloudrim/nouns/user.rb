@@ -6,15 +6,24 @@ module Cloudrim
       LOG.debug('Listing stuff')
     end
 
+    desc 'stats', 'Gather stats'
+    def stats
+      api_url = ENV['API_URL'] ||= 'http://localhost:4567'
+      LOG.debug("APIUrl: #{api_url}")
+      api = "#{api_url}/api/1.0"
+      r = RestClient.get("#{api}/stats")
+      stats = JSON::parse(r.body)['data']
+      pp stats
+    end
+
     desc 'unlock', 'Unlock users that are ready to play'
     def unlock
-      s = {locked_until: { '$lte': Time.new.to_i }}
-      users = DBM['users'].find(s)
-      pp s
-      users.each do |user|
-        pp user
-        exit
-      end
+      api_url = ENV['API_URL'] ||= 'http://localhost:4567'
+      LOG.debug("APIUrl: #{api_url}")
+      api = "#{api_url}/api/1.0"
+      r = RestClient.get("#{api}/unlock")
+      res = JSON::parse(r.body)
+      pp res
     end
 
     desc 'create NAME', 'Create user'

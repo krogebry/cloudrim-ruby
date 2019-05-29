@@ -59,8 +59,16 @@ namespace :docker do
 end
 
 desc 'Do all of the docker things.'
-task :docker do |t,args|
-  Rake::Task['docker:build'].invoke('cloudrim', Cloudrim::VERSION )
-  Rake::Task['docker:tag'].invoke('cloudrim', Cloudrim::VERSION )
-  Rake::Task['docker:push'].invoke('cloudrim', Cloudrim::VERSION )
+task :docker_web do
+  Rake::Task['docker:build'].invoke('cloudrim-web', Cloudrim::VERSION )
+  Rake::Task['docker:tag'].invoke('cloudrim-web', Cloudrim::VERSION )
+  Rake::Task['docker:push'].invoke('cloudrim-web', Cloudrim::VERSION )
+end
+
+desc 'Do all of the docker things for battle engine'
+task :docker_battle do
+  docker_file = 'Dockerfile.battle'
+  Rake::Task['docker:build'].invoke('cloudrim-battle', Cloudrim::VERSION, docker_file )
+  Rake::Task['docker:tag'].invoke('cloudrim-battle', Cloudrim::VERSION)
+  Rake::Task['docker:push'].invoke('cloudrim-battle', Cloudrim::VERSION)
 end

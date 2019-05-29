@@ -10,4 +10,4 @@ COPY ./ /opt/edos/cloudrim/ui/
 
 WORKDIR /opt/edos/cloudrim/ui/
 
-CMD ["./bin/entry_point.sh"]
+CMD ["./bin/ep_web.sh"]
