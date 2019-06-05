@@ -13,4 +13,8 @@ LOG.level = Logger::DEBUG
 require 'cloudrim/version'
 require 'cloudrim/user'
 
+require 'cloudrim/attack'
+require 'cloudrim/weapon'
+require 'cloudrim/fighter'
 
+require 'cloudrim/arena'

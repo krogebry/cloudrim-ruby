@@ -26,43 +26,40 @@ module Cloudrim
       pp res
     end
 
-    desc 'create NAME', 'Create user'
-    def create(name)
-      begin
-        user = Cloudrim::User.new({
-                                      name: name,
-                                      type: 'jaeger',
-                                      # type: 'kaiju',
-                                      num_games: 0,
-                                      exerience: 0,
-                                      life: 100,
-                                      ready_to_play: true,
-                                  })
-        user.create
-
-      rescue => e
-        LOG.fatal(format('Exception: %s', e))
-        pp e.backtrace
-
-      end
-    end
+    # desc 'create NAME', 'Create user'
+    # def create(name)
+    #   begin
+    #     user = Cloudrim::User.new({
+    #                                   name: name,
+    #                                   type: 'jaeger',
+    #                                   # type: 'kaiju',
+    #                                   num_games: 0,
+    #                                   exerience: 0,
+    #                                   life: 100,
+    #                                   ready_to_play: true,
+    #                               })
+    #     user.create
+    #
+    #   rescue => e
+    #     LOG.fatal(format('Exception: %s', e))
+    #     pp e.backtrace
+    #
+    #   end
+    # end
 
     desc 'load NUMBER', 'Load a bunch of users'
     def load(n)
       ts = Time.new.to_i
+      api_url = ENV['API_URL'] ||= 'http://localhost:4567'
 
       n.to_i.times do |i|
-        type = i % 2 == 1 ? 'jaeger' : 'kaiju'
+        type = i % 2 == 1 ? 'Jaeger' : 'Kaiju'
         begin
-          user = Cloudrim::User.new({
-                                        life: 100,
-                                        name: "user#{i}-#{ts}",
-                                        type: type,
-                                        num_games: 0,
-                                        exerience: 0,
-                                        ready_to_play: true
-                                    })
-          user.create
+          user = {
+            name: "user#{i}-#{ts}",
+            fighter_type: type
+          }
+          RestClient.post("#{api_url}/api/1.0/user", user)
 
         rescue => e
           LOG.fatal(format('Exception: %s', e))

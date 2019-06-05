@@ -26,15 +26,15 @@ DB_READ_PASS = ENV['DB_READ_PASS']
 Mongo::Logger.logger.level = ::Logger::FATAL
 
 DBM = Mongo::Client.new(["#{DB_MASTER_HOST}:#{DB_MASTER_PORT}"],
-                        ssl: true,
-                        ssl_verify: false,
+                        # ssl: true,
+                        # ssl_verify: false,
                         user: DB_MASTER_USER,
                         password: DB_MASTER_PASS,
                         database: 'cloudrim')
 
 DBR = Mongo::Client.new(["#{DB_READ_HOST}:#{DB_READ_PORT}"],
-                        ssl: true,
-                        ssl_verify: false,
+                        # ssl: true,
+                        # ssl_verify: false,
                         user: DB_READ_USER,
                         password: DB_READ_PASS,
                         database: 'cloudrim')

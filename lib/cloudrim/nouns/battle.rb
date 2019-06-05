@@ -19,7 +19,7 @@ module Cloudrim
           r = RestClient.post("#{api}/battle", data)
           pp JSON::parse(r.body)
 
-          sleep rand(10)
+          # sleep rand(10)
 
         rescue RestClient::InternalServerError => e
           LOG.fatal("Server failed: #{e}".red)
